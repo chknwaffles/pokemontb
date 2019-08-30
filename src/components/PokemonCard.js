@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Descriptions, Tag } from 'antd'
+import { Card, Descriptions, Tag, Button } from 'antd'
 import "antd/dist/antd.css";
 
 const imageStyle = {
@@ -10,9 +10,9 @@ const imageStyle = {
 }
 
 export default function PokemonCard(props) {
-    const { pokedex_entry, name, height, weight, types, sprites } = props
+    const { pokedex_entry, name, height, weight, types, sprites, handlePokemonDetails } = props
     const [image, setImage] = useState(sprites[0])
-    console.log(props)
+
     const handleSprite = () => {
         if (image === sprites[0])
             setImage(sprites[1])
@@ -54,15 +54,17 @@ export default function PokemonCard(props) {
 
     return (
         <Card
-            style={{ width: '250px', height: '280px' }}
+            style={{ width: '225px', height: '280px' }}
             cover={<img style={imageStyle} alt={name} src={image} onClick={() => handleSprite()}/>}
-
         > 
-            <Descriptions title={formatName()}>
+            <Descriptions title={formatName()} border size='small'>
                 <Descriptions.Item label='Type'> {renderTypeBadges()} </Descriptions.Item>
                 <Descriptions.Item label='Height'> {height} </Descriptions.Item>
                 <Descriptions.Item label='Weight'> {weight} </Descriptions.Item>  
             </Descriptions>
+
+            <Button type="primary" onClick={() => handlePokemonDetails(props)}>Details</Button>
+            <Button icon="plus-circle" />
         </Card>
     )
 }
