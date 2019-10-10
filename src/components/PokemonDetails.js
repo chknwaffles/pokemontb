@@ -1,12 +1,12 @@
 import React from 'react'
-import { Button } from 'antd'
-import { ResponsiveRadar } from '@nivo/radar'
+import { Button, Table } from 'antd'
+import RadarChart from 'react-svg-radar-chart';
+import 'react-svg-radar-chart/build/css/index.css'
 import '../stylesheets/Details.css'
 // https://assets.pokemon.com/assets/cms2/img/pokedex/full/150.png 
 // 475 x 475 image
 
-export default function PokemonDetails(props) {
-    const { currentPokemon, setPage } = props
+export default function PokemonDetails({ currentPokemon, setPage}) {
 
     const imageUrl = () => {
         let pokedexEntry = currentPokemon.pokedex_entry
@@ -23,15 +23,54 @@ export default function PokemonDetails(props) {
     console.log(currentPokemon)
 
     const formatStats = () => {
-        let stats = currentPokemon.stats.map(stat => {
+        let data = []
+        let dataset = { attack: 0, defense: 0, specialAttack: 0, specialDefense: 0, speed: 0 }
+        currentPokemon.stats.map(stat => {
             let newStat = JSON.parse(stat)
-            let name = newStat[':name']
-            let value = newStat[':stat']
-
+            let name = Object.keys(newStat).toString()
+            let value = +Object.values(newStat).toString() / 200
+            dataset[name] = value
             return { [name]: value }
         })
-        return stats
+        // change stats array to obj hash
+        data.push({ "data": dataset, meta: { color: 'blue' }})
+        return data
     }
+
+    const radarKeys = {
+        attack: 'Attack',
+        defense: 'Defense',
+        specialAttack: 'Special Attack',
+        specialDefense: 'Special Defense',
+        speed: 'Speed'
+    }
+
+    const formatMovesets = () => {
+        let data = []
+        currentPokemon.moveset.map((move, i) => {
+            let newMove = JSON.parse(move)
+            let moveName = Object.keys(newMove).toString()
+            let level = Object.values(newMove).toString()
+
+            data.push({ key: `${i}`, name: moveName, level: level })
+            return { key: `${i}`, name: moveName, level: level }
+        })
+        debugger
+        return data
+    }
+
+    const columns = [
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name'
+        },
+        {
+            title: 'Level',
+            dataIndex: 'level',
+            key: 'level'
+        }
+    ]
 
     return (
         <div className='details-container'>
@@ -39,20 +78,14 @@ export default function PokemonDetails(props) {
                 <img src={imageUrl()} alt={currentPokemon.name} />
             </div>
             <div className='stats-container'>
-                Radar graph here
-                <ResponsiveRadar 
+                <RadarChart
+                    captions={radarKeys}
                     data={formatStats()}
-                    dotSize={10}
-                    dotBorderWidth={2}
-                    dotBorderColor={{ from: 'color' }}
-                    fillOpacity={0.8}
+                    size={300}
                 />
             </div>
-            <div>
-                More information about the pokemon here
-            </div>
-            <div>
-                Pokemon moveset information here
+            <div className='moveset-container'>
+                <Table dataSource={formatMovesets()} columns={columns} />
             </div>
             <Button type='primary' onClick={() => setPage('home')} > Back </Button>
         </div>
