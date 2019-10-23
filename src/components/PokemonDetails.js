@@ -20,8 +20,6 @@ export default function PokemonDetails({ currentPokemon, setPage}) {
         return `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokedexEntry}.png`
     }
 
-    console.log(currentPokemon)
-
     const formatStats = () => {
         let data = []
         let dataset = { attack: 0, defense: 0, specialAttack: 0, specialDefense: 0, speed: 0 }
@@ -52,10 +50,13 @@ export default function PokemonDetails({ currentPokemon, setPage}) {
             let moveName = Object.keys(newMove).toString()
             let level = Object.values(newMove).toString()
 
-            data.push({ key: `${i}`, name: moveName, level: level })
+            let formattedMove = moveName.split('-').map(w => {
+                return w.charAt(0).toUpperCase() + w.slice(1)
+            }).join(' ')
+
+            data.push({ key: `${i}`, name: formattedMove, level: level })
             return { key: `${i}`, name: moveName, level: level }
         })
-        debugger
         return data
     }
 

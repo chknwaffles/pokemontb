@@ -13,6 +13,9 @@ export default function NavBar({ currentPage, setCurrentPage }) {
                 <Menu.Item key='Home' onClick={() => handlePage('home')}>
                     Home
                 </Menu.Item>
+                <Menu.Item key='Database' onClick={() => handlePage('database')}>
+                    Database
+                </Menu.Item>
                 <Menu.Item key='Login' onClick={() => handlePage('login')}>
                     Login
                 </Menu.Item>

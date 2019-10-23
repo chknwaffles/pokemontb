@@ -15,7 +15,11 @@ function App() {
 
     const renderPage = () => {
         switch(currentPage) {
-            case 'home': 
+            case 'home':
+                return (
+                    "Welcome to Pokemon Team Builder!"
+                )
+            case 'database': 
                 return <PokemonContainer setPage={setPage} setPokemon={setPokemon} />
             case 'login':
                 return <Login setCurrentPage={setCurrentPage} />

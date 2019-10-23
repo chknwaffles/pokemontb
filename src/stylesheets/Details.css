@@ -1,0 +1,12 @@
+.details-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.img-container {
+    position: sticky;
+}
+
+.stats-container {
+}
