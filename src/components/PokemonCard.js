@@ -48,7 +48,8 @@ export default function PokemonCard(props) {
         const resultTypes = types.map(type => JSON.parse(type))
 
         return resultTypes.map(type => {
-            return <Tag color={getColorFromType(type[':name'])}> {type[':name']} </Tag>
+            let typeName = Object.keys(type).toString()
+            return <Tag color={getColorFromType(typeName)}> {typeName} </Tag>
         })
     }
 

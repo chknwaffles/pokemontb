@@ -2,30 +2,31 @@ import React, { useState } from 'react'
 import { Form, Icon, Input, Button } from 'antd'
 
 export default function Login(props) {
-    const { signup } = props
+    const { signup, setCurrentPage } = props
     const [fields, setFields] = useState({user: '', password: ''})
 
-    const handleChange = (event) => setFields({...fields, [event.target.name]: event.target.value})
+    const handleChange = (e) => setFields({...fields, [e.target.id]: e.target.value})
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
+    const handleSubmit = (e) => {
+        e.preventDefault()
 
-        const URL = (props.signup) ? 'signup' : 'login'
+        const URL = (signup) ? 'signup' : 'login'
         fetch(`http://localhost:3000/${URL}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(fields)
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(fields)
         })
         .then(response => response.json())
         .then(data => {
-          if (data.errors) {
-            alert(data.errors)
-          } else {
-            localStorage.setItem("token", data.token)
-          }
+            if (data.errors) {
+                alert(data.errors)
+            } else {
+                localStorage.setItem("token", data.token)
+                setCurrentPage('profile')
+            }
         }) 
     }
 
@@ -35,6 +36,7 @@ export default function Login(props) {
                 <Input
                     prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                     placeholder="Username"
+                    id='user'
                     value={fields.user}
                     onChange={(e) => handleChange(e)}
                 />
@@ -43,6 +45,7 @@ export default function Login(props) {
                 <Input
                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                     type="password"
+                    id='password'
                     placeholder="Password"
                     value={fields.password}
                     onChange={(e) => handleChange(e)}
