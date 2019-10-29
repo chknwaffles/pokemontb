@@ -27,14 +27,14 @@ function App() {
           })
           .then(res => res.json())
           .then(response => {
-            if (response.errors){
-              localStorage.removeItem("user_id")
-              alert(response.errors)
-            } else {
-              setCurrentUser(response)
-              console.log(response)
-            }
-          })
+                if (response.errors)    {
+                    localStorage.removeItem("user_id")
+                    alert(response.errors)
+                } else {
+                    setCurrentUser(response)
+                    console.log(response)
+                }
+            })
         }
     }, [])
 
@@ -59,7 +59,7 @@ function App() {
             case 'signup':
                 return <Login signup={true} setCurrentPage={setCurrentPage} />
             case 'profile':
-                return <Profile currentUser={currentUser} setCurrentPage={setCurrentPage} />
+                return <Profile currentUser={currentUser} setCurrentPage={setCurrentPage} setCurrentUser={setCurrentUser} />
             case 'details': 
                 return <PokemonDetails currentPokemon={currentPokemon} setPage={setPage} />
             default:

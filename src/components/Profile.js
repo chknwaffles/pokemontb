@@ -1,16 +1,44 @@
 import React from 'react'
 import { Button } from 'antd'
 import "antd/dist/antd.css";
+import PokeTeamView from './PokeTeamView'
 
 export default function Profile(props) {
+    const { currentUser, setCurrentUser } = props
 
     const addTeam = () => {
         
+        fetch(`http://localhost:3000/${currentUser.id}/team/new`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.errors) {
+                alert(data.errors)
+            } else {
+                debugger
+                setCurrentUser(data)
+            }
+        }) 
+    }
+
+    const renderTeams = () => {
+        if (currentUser.teams.length > 0) {
+            currentUser.teams.map(team => {
+                return <PokeTeamView team={team} />
+            })
+        } else {
+            return <p>No teams currently made.</p>
+        }
     }
 
     return (
         <React.Fragment>
-            <p>No Teams currently made</p>
+            {renderTeams()}
 
             <Button icon="plus-circle" onClick={() => addTeam()} > Add Team </Button>
         </React.Fragment>
