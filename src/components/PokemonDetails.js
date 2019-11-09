@@ -1,12 +1,15 @@
 import React from 'react'
+import { Redirect } from 'react-router-dom'
 import { Button, Table } from 'antd'
 import RadarChart from 'react-svg-radar-chart';
+
 import 'react-svg-radar-chart/build/css/index.css'
 import '../stylesheets/Details.css'
 // https://assets.pokemon.com/assets/cms2/img/pokedex/full/150.png 
 // 475 x 475 image
 
-export default function PokemonDetails({ currentPokemon, setPage}) {
+export default function PokemonDetails(props) {
+    const { history, currentPokemon } = props
 
     const imageUrl = () => {
         let pokedexEntry = currentPokemon.pokedex_entry
@@ -73,6 +76,9 @@ export default function PokemonDetails({ currentPokemon, setPage}) {
         }
     ]
 
+    if (currentPokemon == null)
+        return <Redirect to='/' />
+
     return (
         <div className='details-container'>
             <div className='img-container'>
@@ -88,7 +94,7 @@ export default function PokemonDetails({ currentPokemon, setPage}) {
             <div className='moveset-container'>
                 <Table dataSource={formatMovesets()} columns={columns} />
             </div>
-            <Button type='primary' onClick={() => setPage('home')} > Back </Button>
+            <Button type='primary' onClick={() => history.push('/db')} > Back </Button>
         </div>
     )
 }

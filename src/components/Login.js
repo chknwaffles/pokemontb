@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Form, Icon, Input, Button } from 'antd'
 
 export default function Login(props) {
-    const { signup, setCurrentPage } = props
+    const { signup } = props
     const [fields, setFields] = useState({user: '', password: ''})
+    const history = useHistory()
 
     const handleChange = (e) => setFields({...fields, [e.target.id]: e.target.value})
 
@@ -25,7 +27,7 @@ export default function Login(props) {
                 alert(data.errors)
             } else {
                 localStorage.setItem("token", data.token)
-                setCurrentPage('profile')
+                history.push('/profile')
             }
         }) 
     }

@@ -1,10 +1,11 @@
 import React from 'react'
+import { Redirect } from 'react-router-dom'
 import { Button } from 'antd'
 import "antd/dist/antd.css";
 import PokeTeamView from './PokeTeamView'
 
 export default function Profile(props) {
-    const { currentUser, setCurrentUser } = props
+    const { currentUser } = props
 
     const addTeam = () => {
         
@@ -21,7 +22,6 @@ export default function Profile(props) {
                 alert(data.errors)
             } else {
                 debugger
-                setCurrentUser(data)
             }
         }) 
     }
@@ -35,6 +35,9 @@ export default function Profile(props) {
             return <p>No teams currently made.</p>
         }
     }
+
+    if (currentUser == null)
+        return <Redirect to='/' />
 
     return (
         <React.Fragment>

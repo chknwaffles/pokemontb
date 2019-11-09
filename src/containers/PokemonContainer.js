@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import { List } from 'antd'
 import PokemonCard from '../components/PokemonCard'
 
 
-export default function PokemonContainer({ setPage, setPokemon }) {
-    const [allPokemon, setAllPokemon] = useState([])
-
-    useEffect(() => {
-        async function fetchPokemon() {
-            const result = await axios.get(`http://localhost:3000/pokemon`)
-            setAllPokemon(result.data)
-        }
-
-        fetchPokemon()
-    }, [])
-
+export default function PokemonContainer(props) {
+    const { history, allPokemon, setPokemon } = props
+    
     const handlePokemonDetails = (pokeObj) => {
-        setPage('details')
         setPokemon(pokeObj)
+        console.log(pokeObj)
+        history.push(`/poke/${pokeObj.id}`)
     }
 
     return (
