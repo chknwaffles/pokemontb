@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function Form(props) {
+export default function AddForm(props) {
     return (
         <React.Fragment>
             
