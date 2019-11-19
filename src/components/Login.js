@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Form, Icon, Input, Button } from 'antd'
 
+import '../stylesheets/LoginForm.css'
+
 export default function Login(props) {
     const { signup } = props
     const [fields, setFields] = useState({user: '', password: ''})

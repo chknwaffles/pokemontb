@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route, useRouteMatch, useHistory } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, useRouteMatch } from 'react-router-dom'
 import { Layout } from 'antd'
 
 import PokemonContainer from './containers/PokemonContainer'
@@ -19,7 +19,6 @@ function App() {
     const [currentPokemon, setCurrentPokemon] = useState()
     const [currentUser, setCurrentUser] = useState(null)
     const match = useRouteMatch()
-    const history = useHistory()
 
     useEffect(() => {
         fetch('http://localhost:3000/pokemon')
@@ -62,31 +61,31 @@ function App() {
     const setPokemon = (pokeObj) => setCurrentPokemon(pokeObj)
 
     return (
-        <Router>
+        <Router >
             <div className="App">
                 <Layout>
                     <Header>
-                        <NavBar history={history} currentUser={currentUser} logout={logout} />
+                        <NavBar currentUser={currentUser} logout={logout} />
                     </Header>
                     <Content>
                         <Switch>
                             <Route path='/db'>
-                                <PokemonContainer history={history} allPokemon={allPokemon} setPokemon={setPokemon} />
+                                <PokemonContainer allPokemon={allPokemon} setPokemon={setPokemon} />
                             </Route>
                             <Route path='/login'>
-                                <Login history={history} signup={false} />
+                                <Login signup={false} />
                             </Route>
                             <Route path='/signup'>
-                                <Login history={history} signup={true} />
+                                <Login signup={true} />
                             </Route>
                             <Route path='/profile'>
-                                <Profile history={history} currentUser={currentUser} />
+                                <Profile currentUser={currentUser} allPokemon={allPokemon} />
                             </Route>
                             <Route path={`${match.path}poke/:pokemonId`}>
-                                <PokemonDetails history={history} currentPokemon={currentPokemon} />
+                                <PokemonDetails currentPokemon={currentPokemon} />
                             </Route>
-                            <Route exact path='/'>
-                                <Home history={history} />
+                            <Route path='/'>
+                                <Home currentUser={currentUser} allPokemon={allPokemon} />
                             </Route>
                         </Switch>
                     </Content>

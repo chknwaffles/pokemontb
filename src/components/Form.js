@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 
 export default function AddForm(props) {
     return (
-        <React.Fragment>
+        <div>
             
-        </React.Fragment>
+        </div>
     )
 }

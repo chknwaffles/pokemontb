@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 import { Button, Table } from 'antd'
 import RadarChart from 'react-svg-radar-chart';
 
@@ -9,8 +9,9 @@ import '../stylesheets/Details.css'
 // 475 x 475 image
 
 export default function PokemonDetails(props) {
-    const { history, currentPokemon } = props
-
+    const { currentPokemon } = props
+    const history = useHistory()
+    
     const imageUrl = () => {
         let pokedexEntry = currentPokemon.pokedex_entry
         if (pokedexEntry < 100) {

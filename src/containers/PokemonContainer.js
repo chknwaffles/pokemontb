@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { List } from 'antd'
 import PokemonCard from '../components/PokemonCard'
 
-
 export default function PokemonContainer(props) {
-    const { history, allPokemon, setPokemon } = props
-    
+    const { allPokemon, setPokemon } = props
+    const history = useHistory()
+
     const handlePokemonDetails = (pokeObj) => {
         setPokemon(pokeObj)
         console.log(pokeObj)
