@@ -23,7 +23,7 @@ export default function Profile(props) {
             if (data.errors) {
                 alert(data.errors)
             } else {
-                setModal(true)
+                setModal(false)
             }
         }) 
     }
