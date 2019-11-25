@@ -7,7 +7,7 @@ const gridStyle = {
 };
 
 export default function TeamCard(props) {
-    const { team } = props
+    const { team, allPokemon } = props
 
     const renderPokemon = () => {
         if (team.pokemons == null) {
