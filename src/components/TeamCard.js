@@ -25,7 +25,24 @@ export default function TeamCard(props) {
     }
 
     const addPokemon = () => {
-
+        // used for showing a search bar to find a pokemon
+        fetch(`http://localhost:3000/${URL}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(fields)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.errors) {
+                alert(data.errors)
+            } else {
+                localStorage.setItem("token", data.token)
+                history.push('/profile')
+            }
+        })
     }
 
     return (
