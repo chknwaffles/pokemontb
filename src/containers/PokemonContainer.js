@@ -1,10 +1,10 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { List } from 'antd'
-import PokemonCard from '../components/PokemonCard'
+import CardContainer from './CardContainer'
 
 export default function PokemonContainer(props) {
-    const { allPokemon, setPokemon } = props
+    const { allPokemon, setPokemon, teams } = props
     const history = useHistory()
 
     const handlePokemonDetails = (pokeObj) => {
@@ -29,7 +29,7 @@ export default function PokemonContainer(props) {
                 dataSource={allPokemon}
                 renderItem={item => (
                     <List.Item key={item.id} >
-                        <PokemonCard {...item} handlePokemonDetails={handlePokemonDetails} />
+                        <CardContainer {...item} handlePokemonDetails={handlePokemonDetails} teams={teams} />
                     </List.Item>
                 )}
             />
