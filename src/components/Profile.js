@@ -5,7 +5,7 @@ import "antd/dist/antd.css";
 import TeamCard from './TeamCard'
 
 export default function Profile(props) {
-    const { currentUser } = props
+    const { currentUser, allPokemon } = props
     const [modal, setModal] = useState(false)
     const [teamName, setTeamName] = useState()
 
@@ -24,6 +24,7 @@ export default function Profile(props) {
                 alert(data.errors)
             } else {
                 setModal(false)
+                console.log(data)
             }
         }) 
     }
@@ -31,7 +32,7 @@ export default function Profile(props) {
     const renderTeams = () => {
         if (currentUser.teams.length > 0) {
             return currentUser.teams.map(team => {
-                return <TeamCard team={team} allPokemon={allPokemon} />
+                return <TeamCard team={team} currentUser={currentUser} allPokemon={allPokemon} />
             })
         } else {
             return <p>No teams currently made.</p>

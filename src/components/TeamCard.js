@@ -1,17 +1,18 @@
-import React from 'react'
-import { Card, Col, Row } from 'antd';
+import React, { useState } from 'react'
+import { Card, Col, Row } from 'antd'
 
 const gridStyle = {
     width: '25%',
     textAlign: 'center',
-};
+}
 
 export default function TeamCard(props) {
-    const { team, allPokemon } = props
+    const { team, currentUser, allPokemon } = props
+    const [showSearch, setSearch] = useState(false)
 
     const renderPokemon = () => {
         if (team.pokemons == null) {
-            return <Card type='inner' hoverable={true} onClick={() => addPokemon()}>
+            return <Card type='inner' hoverable={true} onClick={() => searchPokemon()}>
                 Add a pokemon!
             </Card>
         } else {
@@ -24,23 +25,25 @@ export default function TeamCard(props) {
         
     }
 
-    const addPokemon = () => {
+    const searchPokemon = () => {
+        console.log('yesy')
+    }
+
+    const addPokemon = (poke) => {
         // used for showing a search bar to find a pokemon
-        fetch(`http://localhost:3000/${URL}`, {
+        fetch(`http://localhost:3000/${currentUser.id}/team/${team.id}/add/${poke.id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
-            },
-            body: JSON.stringify(fields)
+            }
         })
         .then(response => response.json())
         .then(data => {
             if (data.errors) {
                 alert(data.errors)
             } else {
-                localStorage.setItem("token", data.token)
-                history.push('/profile')
+                
             }
         })
     }
