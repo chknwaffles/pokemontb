@@ -8,7 +8,7 @@ import '../stylesheets/Details.css'
 // https://assets.pokemon.com/assets/cms2/img/pokedex/full/150.png 
 // 475 x 475 image
 
-export default function PokemonDetails(props) {
+export default function DetailsContainer(props) {
     const { currentPokemon } = props
     const history = useHistory()
     

@@ -32,7 +32,7 @@ export default function Profile(props) {
     const renderTeams = () => {
         if (currentUser.teams.length > 0) {
             return currentUser.teams.map(team => {
-                return <TeamCard team={team} currentUser={currentUser} allPokemon={allPokemon} />
+                return <TeamCardContainer team={team} currentUser={currentUser} allPokemon={allPokemon} />
             })
         } else {
             return <p>No teams currently made.</p>

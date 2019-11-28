@@ -6,7 +6,7 @@ const gridStyle = {
     textAlign: 'center',
 }
 
-export default function TeamCard(props) {
+export default function TeamCardContainer(props) {
     const { team, currentUser, allPokemon } = props
     const [showSearch, setSearch] = useState(false)
 

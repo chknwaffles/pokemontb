@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, useRouteMatch } from 'react-rou
 import { Layout } from 'antd'
 
 import PokemonContainer from './containers/PokemonContainer'
-import PokemonDetails from './components/PokemonDetails'
+import PokemonDetails from './containers/DetailsContainer'
 import Home from './components/Home'
 import NavBar from './components/NavBar'
 import Login from './components/Login'
@@ -82,7 +82,7 @@ function App() {
                                 <Profile currentUser={currentUser} allPokemon={allPokemon} />
                             </Route>
                             <Route path={`${match.path}poke/:pokemonId`}>
-                                <PokemonDetails currentPokemon={currentPokemon} />
+                                <DetailsContainer currentPokemon={currentPokemon} />
                             </Route>
                             <Route path='/'>
                                 <Home currentUser={currentUser} allPokemon={allPokemon} />
