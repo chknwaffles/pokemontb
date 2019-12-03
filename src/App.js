@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, useRouteMatch } from 'react-rou
 import { Layout } from 'antd'
 
 import PokemonContainer from './containers/PokemonContainer'
-import PokemonDetails from './containers/DetailsContainer'
+import DetailsContainer from './containers/DetailsContainer'
 import Home from './components/Home'
 import NavBar from './components/NavBar'
 import Login from './components/Login'
@@ -41,13 +41,13 @@ function App() {
             }
           })
           .then(res => res.json())
-          .then(response => {
-                if (response.errors)    {
+          .then(res => {
+                if (res.errors)    {
                     localStorage.removeItem("user_id")
-                    alert(response.errors)
+                    alert(res.errors)
                 } else {
-                    setCurrentUser(response)
-                    console.log(response)
+                    setCurrentUser(res)
+                    console.log(res)
                 }
             })
         }
@@ -60,6 +60,26 @@ function App() {
 
     const setPokemon = (pokeObj) => setCurrentPokemon(pokeObj)
 
+    const addToTeam = (team, poke) => {
+        // used for showing a search bar to find a pokemon
+        fetch(`http://localhost:3000/${currentUser.id}/team/${team}/add/${poke}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ team_id: team, poke_id: poke })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.errors) {
+                alert(res.errors)
+            } else {
+                setCurrentUser(res)
+            }
+        })
+    }
+
     return (
         <Router >
             <div className="App">
@@ -70,7 +90,7 @@ function App() {
                     <Content>
                         <Switch>
                             <Route path='/db'>
-                                <PokemonContainer allPokemon={allPokemon} setPokemon={setPokemon} />
+                                <PokemonContainer allPokemon={allPokemon} setPokemon={setPokemon} currentUser={currentUser} addToTeam={addToTeam} />
                             </Route>
                             <Route path='/login'>
                                 <Login signup={false} />
@@ -79,7 +99,7 @@ function App() {
                                 <Login signup={true} />
                             </Route>
                             <Route path='/profile'>
-                                <Profile currentUser={currentUser} allPokemon={allPokemon} />
+                                <Profile currentUser={currentUser} allPokemon={allPokemon} addToTeam={addToTeam} />
                             </Route>
                             <Route path={`${match.path}poke/:pokemonId`}>
                                 <DetailsContainer currentPokemon={currentPokemon} />

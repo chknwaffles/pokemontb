@@ -4,7 +4,7 @@ import { List } from 'antd'
 import CardContainer from './CardContainer'
 
 export default function PokemonContainer(props) {
-    const { allPokemon, setPokemon, teams } = props
+    const { allPokemon, setPokemon, currentUser, addToTeam } = props
     const history = useHistory()
 
     const handlePokemonDetails = (pokeObj) => {
@@ -29,7 +29,7 @@ export default function PokemonContainer(props) {
                 dataSource={allPokemon}
                 renderItem={item => (
                     <List.Item key={item.id} >
-                        <CardContainer {...item} handlePokemonDetails={handlePokemonDetails} teams={teams} />
+                        <CardContainer {...item} handlePokemonDetails={handlePokemonDetails} currentUser={currentUser} addToTeam={addToTeam} />
                     </List.Item>
                 )}
             />

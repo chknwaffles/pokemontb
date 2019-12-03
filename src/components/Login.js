@@ -23,12 +23,12 @@ export default function Login(props) {
             },
             body: JSON.stringify(fields)
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.errors) {
-                alert(data.errors)
+        .then(res => res.json())
+        .then(res => {
+            if (res.errors) {
+                alert(res.errors)
             } else {
-                localStorage.setItem("token", data.token)
+                localStorage.setItem("token", res.token)
                 history.push('/profile')
             }
         }) 

@@ -10,9 +10,11 @@ const imageStyle = {
 }
 
 export default function CardContainer(props) {
-    const { pokedex_entry, name, height, weight, types, sprites, handlePokemonDetails, teams } = props
+    const { pokedex_entry, name, height, weight, types, sprites, handlePokemonDetails, currentUser, addToTeam } = props
     const [image, setImage] = useState(sprites[0])
     const [modal, showModal] = useState(false)
+
+    const handleCancel = () => showModal(false)
 
     const handleSprite = () => {
         if (image === sprites[0])
@@ -55,8 +57,32 @@ export default function CardContainer(props) {
         })
     }
 
+    const addPoke = () => {
+        if (currentUser == null || currentUser.teams == null) {
+            alert('You must log in or create a team to add this pokemon to one of your teams!')
+        } else {
+            showModal(true)
+        }
+    }
+
     const showTeams = () => {
         // loop to return all teams on each card
+        if (currentUser != null && currentUser.teams != null) {
+            return currentUser.teams.map(team => {
+                return (
+                    <div>
+                        <p>{team.name}</p>
+                        <Button 
+                            icon="plus-circle"
+                            onClick={() => {
+                                addToTeam(team.id, pokedex_entry)
+                                showModal(false)
+                            }} 
+                        />
+                    </div>
+                )
+            })
+        }
     }
 
     return (
@@ -72,17 +98,15 @@ export default function CardContainer(props) {
                 </Descriptions>
 
                 <Button type="primary" onClick={() => handlePokemonDetails(props)}>Details</Button>
-                <Button icon="plus-circle" onClick={() => showModal(true)} />
+                <Button icon="plus-circle" onClick={() => addPoke()} />
             </Card>
             <Modal
             title='Which team would you like to add this pokemon to?'
             visible={modal}
-            onOk={addTeam}
             onCancel={handleCancel}
             >
                 {showTeams()}
             </Modal>
-
         </div>
     )
 }

@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Button, Modal, Form, Input } from 'antd'
 import "antd/dist/antd.css";
-import TeamCard from './TeamCard'
+import TeamCardContainer from '../containers/TeamCardContainer'
 
 export default function Profile(props) {
-    const { currentUser, allPokemon } = props
+    const { currentUser, allPokemon, addToTeam } = props
     const [modal, setModal] = useState(false)
     const [teamName, setTeamName] = useState()
 
@@ -32,7 +32,7 @@ export default function Profile(props) {
     const renderTeams = () => {
         if (currentUser.teams.length > 0) {
             return currentUser.teams.map(team => {
-                return <TeamCardContainer team={team} currentUser={currentUser} allPokemon={allPokemon} />
+                return <TeamCardContainer team={team} allPokemon={allPokemon} addToTeam={addToTeam} />
             })
         } else {
             return <p>No teams currently made.</p>

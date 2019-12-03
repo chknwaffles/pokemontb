@@ -7,13 +7,13 @@ const gridStyle = {
 }
 
 export default function TeamCardContainer(props) {
-    const { team, currentUser, allPokemon } = props
+    const { team, allPokemon, addToTeam } = props
     const [showSearch, setSearch] = useState(false)
 
     const renderPokemon = () => {
         if (team.pokemons == null) {
             return <Card type='inner' hoverable={true} onClick={() => searchPokemon()}>
-                Add a pokemon!
+                Coming soon! Add a pokemon!
             </Card>
         } else {
             return team.pokemons.forEach(poke => {
@@ -27,25 +27,6 @@ export default function TeamCardContainer(props) {
 
     const searchPokemon = () => {
         console.log('yesy')
-    }
-
-    const addPokemon = (poke) => {
-        // used for showing a search bar to find a pokemon
-        fetch(`http://localhost:3000/${currentUser.id}/team/${team.id}/add/${poke.id}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.errors) {
-                alert(data.errors)
-            } else {
-                
-            }
-        })
     }
 
     return (
