@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Switch, Route, useRouteMatch } from 'react-rou
 import { Layout } from 'antd'
 
 import PokemonContainer from './containers/PokemonContainer'
-import DetailsContainer from './containers/DetailsContainer'
+import DetailsPage from './containers/DetailsContainer'
 import Home from './components/Home'
 import NavBar from './components/NavBar'
 import Login from './components/Login'
-import Profile from './components/Profile'
+import ProfilePage from './containers/ProfileContainer'
 
 import './App.css'
 import "antd/dist/antd.css"
@@ -99,10 +99,10 @@ function App() {
                                 <Login signup={true} />
                             </Route>
                             <Route path='/profile'>
-                                <Profile currentUser={currentUser} allPokemon={allPokemon} addToTeam={addToTeam} />
+                                <ProfilePage currentUser={currentUser} setCurrentUser={setCurrentUser} allPokemon={allPokemon} addToTeam={addToTeam} />
                             </Route>
                             <Route path={`${match.path}poke/:pokemonId`}>
-                                <DetailsContainer currentPokemon={currentPokemon} />
+                                <DetailsPage currentPokemon={currentPokemon} />
                             </Route>
                             <Route path='/'>
                                 <Home currentUser={currentUser} allPokemon={allPokemon} />

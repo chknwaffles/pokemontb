@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Button, Modal, Form, Input } from 'antd'
-import "antd/dist/antd.css";
-import TeamCardContainer from '../containers/TeamCardContainer'
+import { Button, Modal, Form, Input, Row } from 'antd'
+import "antd/dist/antd.css"
+import TeamCard from '../components/TeamCard'
+
+const containerStyle = {
+    width: '100%',
+    display: 'flex'
+}
 
 export default function Profile(props) {
-    const { currentUser, allPokemon, addToTeam } = props
+    const { currentUser, setCurrentUser, allPokemon, addToTeam } = props
     const [modal, setModal] = useState(false)
     const [teamName, setTeamName] = useState()
 
@@ -18,13 +23,32 @@ export default function Profile(props) {
             },
             body: JSON.stringify(teamName)
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.errors) {
-                alert(data.errors)
+        .then(res => res.json())
+        .then(res => {
+            if (res.errors) {
+                alert(res.errors)
             } else {
                 setModal(false)
-                console.log(data)
+                setCurrentUser(res)
+            }
+        }) 
+    }
+
+    const deleteFromTeam = (poke, team) => {
+        fetch(`http://localhost:3000/${currentUser.id}/team/${team.id}/del/${poke.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ team_id: team.id, poke_id: poke.id })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.errors) {
+                alert(res.errors)
+            } else {
+                setCurrentUser(res)
             }
         }) 
     }
@@ -32,7 +56,9 @@ export default function Profile(props) {
     const renderTeams = () => {
         if (currentUser.teams.length > 0) {
             return currentUser.teams.map(team => {
-                return <TeamCardContainer team={team} allPokemon={allPokemon} addToTeam={addToTeam} />
+                return (
+                    <TeamCard key={team.id} team={team} addToTeam={addToTeam} deleteFromTeam={deleteFromTeam} />
+                )
             })
         } else {
             return <p>No teams currently made.</p>
@@ -46,8 +72,10 @@ export default function Profile(props) {
         return <Redirect to='/' />
 
     return (
-        <div className='profile-container'>
-            {renderTeams()}
+        <div className='profile-container' style={containerStyle}>
+            <Row type='flex' justify='space-between' align='middle'>
+                    {renderTeams()}
+            </Row>
 
             <Button icon="plus-circle" onClick={() => setModal(true)} > Add Team </Button>
             <Modal
