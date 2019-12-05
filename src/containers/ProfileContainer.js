@@ -74,7 +74,7 @@ export default function Profile(props) {
     return (
         <div className='profile-container' style={containerStyle}>
             <Row type='flex' justify='space-between' align='middle'>
-                    {renderTeams()}
+                {renderTeams()}
             </Row>
 
             <Button icon="plus-circle" onClick={() => setModal(true)} > Add Team </Button>
