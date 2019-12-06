@@ -19,13 +19,7 @@ export default function TeamCard(props) {
     const cancel = (e) => { }
 
     const renderPokemon = () => {
-        if (team.pokemons.length < 1) {
-            return (
-                <Card.Grid type='inner' onClick={() => searchPokemon()}>
-                    Coming soon! Add a pokemon!
-                </Card.Grid>
-            )
-        } else {
+        if (team.pokemons.length > 0) {
             return team.pokemons.map(poke => {
                 return (
                     <Link to={`/poke/:pokemonId`}>
@@ -51,7 +45,6 @@ export default function TeamCard(props) {
                 )
             })
         }
-        
     }
 
     const searchPokemon = () => {
@@ -65,6 +58,9 @@ export default function TeamCard(props) {
             <div className={`team-card-${team.id}`} style={{ background: '#ECECEC', padding: '30px', display: 'flex', justifyContent: 'space-evenly' }}>
                 <Card title={team.name} style={cardStyle} bodyStyle={{ display: 'flex', height: '75%' }} >
                     {renderPokemon()}
+                    <Card.Grid type='inner' onClick={() => searchPokemon()}>
+                        Coming soon! Add a pokemon!
+                    </Card.Grid>
                 </Card>
             </div>
         </Col>
